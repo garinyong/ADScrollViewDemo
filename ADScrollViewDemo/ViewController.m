@@ -133,20 +133,14 @@
 -(void)reloadImage{
     NSInteger leftImageIndex,rightImageIndex;
     CGPoint offset = [scrollView contentOffset];
-    
-    
     if (offset.x>winSize.width) { //向左滑动
         currentImageIndex=(currentImageIndex+1) % totalPage;
         
     }else if(offset.x<winSize.width){ //向右滑动
         currentImageIndex = (currentImageIndex + totalPage - 1) %  totalPage;
     }
-    
-    
-    //UIImageView *centerImageView=(UIImageView *)[_scrollView viewWithTag:2];
-    centerImageView.image= [imgArray objectAtIndex:currentImageIndex];
-    
-    //重新设置左右图片
+      centerImageView.image= [imgArray objectAtIndex:currentImageIndex];
+     //重新设置左右图片
     leftImageIndex = (currentImageIndex + totalPage-1) % totalPage;
     rightImageIndex=( currentImageIndex+1) % totalPage;
     leftImageView.image=  [imgArray objectAtIndex:leftImageIndex];
