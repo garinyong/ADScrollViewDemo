@@ -26,6 +26,10 @@
     UIImageView *leftImageView;
     UIImageView *centerImageView;
     UIImageView *rightImageView;
+    
+    
+    
+    UIButton   *buttonSaveToken;
 
     
 }
@@ -85,18 +89,29 @@
     [pageCtr addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
     
     
+    
+    
+    
+    buttonSaveToken = [UIButton buttonWithType:UIButtonTypeSystem];
+    buttonSaveToken.frame = CGRectMake(0, 0, 200, 100);
+    buttonSaveToken.center = CGPointMake(winSize.width / 2, winSize.height / 2);
+    [buttonSaveToken setTitle:@"生成登陆令牌" forState:UIControlStateNormal];
+    [buttonSaveToken addTarget:self action:@selector(saveToken) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonSaveToken];
+    
+    
 
 }
 #pragma mark 添加图片三个控件
 -(void)addImageViews{
     leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0,  winSize.width, 200)];
-    leftImageView.contentMode=UIViewContentModeScaleAspectFit;
+//    leftImageView.contentMode=UIViewContentModeScaleAspectFit;
     [scrollView addSubview:leftImageView];
     centerImageView=[[UIImageView alloc]initWithFrame:CGRectMake(winSize.width, 0, winSize.width,  200)];
-    centerImageView.contentMode=UIViewContentModeScaleAspectFit;
+//    centerImageView.contentMode=UIViewContentModeScaleAspectFit;
     [scrollView addSubview:centerImageView];
     rightImageView=[[UIImageView alloc]initWithFrame:CGRectMake(2 * winSize.width, 0, winSize.width, 200)];
-    rightImageView.contentMode=UIViewContentModeScaleAspectFit;
+//    rightImageView.contentMode=UIViewContentModeScaleAspectFit;
     [scrollView addSubview:rightImageView];
 }
 
@@ -113,7 +128,16 @@
 }
 
 
-
+-(void)saveToken
+{
+    
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.dangdang.app"];
+    NSString *token = [NSString stringWithFormat:@"%d",arc4random() % 100000];
+    [sharedDefaults setObject:token forKey:@"login_token"];
+    
+    UIAlertView  *alertView = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"当前生成的登陆令牌是:%@",token ] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alertView show];
+}
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView1{
    
@@ -121,7 +145,7 @@
     [self reloadImage];
 
     //移动到中间
-    [scrollView1 setContentOffset:CGPointMake(winSize.width, 0) animated:NO];
+    [scrollView1 setContentOffset:CGPointMake(winSize.width, 0) animated:YES];
     
      pageCtr.currentPage = currentImageIndex;
     
@@ -147,7 +171,6 @@
     rightImageView.image=  [imgArray objectAtIndex:rightImageIndex];
     
 }
-
 
 
 -(void)changePage:(UIPageControl *)sender
