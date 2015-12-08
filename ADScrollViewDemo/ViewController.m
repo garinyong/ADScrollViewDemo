@@ -16,20 +16,16 @@
     UIScrollView   *scrollView;
     CGSize         winSize;
     NSTimer        *timer;
-    
     NSMutableArray   *imgArray;
     NSInteger      totalPage;
     NSInteger      currentImageIndex;
-    
-    
-    
     UIImageView *leftImageView;
     UIImageView *centerImageView;
     UIImageView *rightImageView;
     
     
     
-    UIButton   *buttonSaveToken;
+   
 
     
 }
@@ -88,19 +84,6 @@
     
     [pageCtr addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
     
-    
-    
-    
-    
-    buttonSaveToken = [UIButton buttonWithType:UIButtonTypeSystem];
-    buttonSaveToken.frame = CGRectMake(0, 0, 200, 100);
-    buttonSaveToken.center = CGPointMake(winSize.width / 2, winSize.height / 2);
-    [buttonSaveToken setTitle:@"生成登陆令牌" forState:UIControlStateNormal];
-    [buttonSaveToken addTarget:self action:@selector(saveToken) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:buttonSaveToken];
-    
-    
-
 }
 #pragma mark 添加图片三个控件
 -(void)addImageViews{
@@ -126,19 +109,7 @@
     pageCtr.currentPage= currentImageIndex;
     
 }
-
-
--(void)saveToken
-{
-    
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.dangdang.app"];
-    NSString *token = [NSString stringWithFormat:@"%d",arc4random() % 100000];
-    [sharedDefaults setObject:token forKey:@"login_token"];
-    
-    UIAlertView  *alertView = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"当前生成的登陆令牌是:%@",token ] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [alertView show];
-}
-
+ 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView1{
    
     //重新加载图片
